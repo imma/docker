@@ -4,6 +4,10 @@ function bootstrap {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   source "$shome/script/profile"
 
+  if [[ "/" == "$(cat /proc/1/cgroup | cut -d: -f3 | uniq)" ]]; then
+    return 0
+  fi
+
   app compile pkg \
     'https://github.com/docker/toolbox/releases/download/v1.9.1/DockerToolbox-1.9.1.pkg'
 }
