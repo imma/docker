@@ -3,7 +3,15 @@
 export VAGRANT_DEFAULT_PROVIDER="docker"
 
 function main {
-  exec parity "$@"
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+
+  source "$shome/script/profile"
+
+  if [[ -x "$(which "parity-${1:-}" 2>&- || true)" ]]; then
+    exec parity "$@"
+  else
+    exec "$(which /usr/local/bin/docker /usr/bin/docker)" "$@"
+  fi
 }
 
-source sub "$BASH_SOURCE" "$@"
+source sub "$0" "$@"
