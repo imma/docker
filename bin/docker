@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+export VAGRANT_DEFAULT_PROVIDER="docker"
+
+function main {
+  exec parity "$@"
+}
+
+source sub "$BASH_SOURCE" "$@"
