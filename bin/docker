@@ -20,7 +20,13 @@ function main {
 
     exec parity "$nm_command" "$@"
   else
-    exec "$(which /usr/local/bin/docker /usr/bin/docker)" "$@"
+    local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker)"
+    if [[ -x "$cmd_docker" ]]; then
+      exec "$cmd_docker" "$@"
+    else
+      echo "ERROR: docker not found: docker $*" 1>&2
+      false
+    fi
   fi
 }
 
