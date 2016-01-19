@@ -16,8 +16,6 @@ function main {
       shift
     fi
 
-    docker tag -f "$nm_image" "ubuntu:packer-input"
-
     exec parity "$nm_command" "$@"
   else
     local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker)"
