@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 
+function give_docker_non_root_access {
+    # Add the docker group if it doesn't already exist
+    sudo groupadd docker
+}
+
+function docker_package_install {
+    # Get the latest docker package
+    curl -sSL https://get.docker.com/gpg | sudo apt-key add -
+
+    # Install Docker
+    curl -sSL https://get.docker.com/ | bash
+
+    # listen on tcp, use device mapper
+    cat | sudo tee -a /etc/default/docker <<"____EOF"
+DOCKER_OPTS="-H tcp://0.0.0.0: --storage-driver=devicemapper"
+____EOF
+
+    # Enable memory and swap accounting
+    sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' /etc/default/grub
+    sudo update-grub
+}
+
 function bootstrap {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   source "$shome/script/profile"
@@ -8,6 +30,10 @@ function bootstrap {
     Darwin)
       app compile pkg \
         'https://github.com/docker/toolbox/releases/download/v1.9.1/DockerToolbox-1.9.1.pkg'
+      ;;
+    Linux)
+      give_docker_non_root_access
+      docker_package_install 
       ;;
   esac
 }
