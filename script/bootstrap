@@ -2,10 +2,10 @@
 
 function docker_package_install {
   # Get the latest docker package
-  curl -sS -L -o https://get.docker.com/gpg | sudo apt-key add -
+  curl -sS -L https://get.docker.com/gpg | sudo apt-key add -
 
   # Install Docker
-  curl -sS -L -o https://get.docker.com/ | bash
+  curl -sS -L https://get.docker.com/ | bash
 
   # listen on tcp, use device mapper
   cat | sudo tee -a /etc/default/docker <<"__EOF"
