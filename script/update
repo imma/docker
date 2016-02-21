@@ -1,40 +1,17 @@
 #!/usr/bin/env bash
 
-function docker_package_install {
-  # Get the latest docker package
-  curl -sS -L https://get.docker.com/gpg | sudo apt-key add -
-
-  # Install Docker
-  curl -sS -L https://get.docker.com/ | bash
-
-  # listen on tcp, use device mapper
-  cat | sudo tee -a /etc/default/docker <<"__EOF"
-DOCKER_OPTS="-H tcp://0.0.0.0: --storage-driver=devicemapper"
-__EOF
-  sudo service docker start || sudo service docker restart
-
-  # Enable memory and swap accounting
-  if [[ -f "/etc/default/grub" ]]; then
-    sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' /etc/default/grub
-    sudo update-grub
-  fi
-}
-
-function bootstrap {
+function update {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   source "$shome/script/profile"
 
+  "$shome/script/bootstrap"
+
   case "$(uname -s)" in
-    Darwin)
-      app compile pkg \
-        'https://github.com/docker/toolbox/releases/download/v1.9.1/DockerToolbox-1.9.1.pkg'
-      ;;
     Linux)
       docker_package_install 
-      echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
       echo "net.ipv4.ip_forward=1" | sudo tee /etc/sysctl.d/60-ip-forward.conf
       ;;
   esac
 }
 
-bootstrap
+update
