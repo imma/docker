@@ -9,7 +9,7 @@ function docker_package_install {
 
   # listen on tcp, use device mapper
   cat | sudo tee -a /etc/default/docker <<"__EOF"
-DOCKER_OPTS="-H tcp://0.0.0.0: --storage-driver=devicemapper"
+DOCKER_OPTS="-H tcp://0.0.0.0: --storage-driver=devicemapper -b=br0"
 __EOF
   sudo service docker start || sudo service docker restart
 
