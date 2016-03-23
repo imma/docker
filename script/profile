@@ -4,14 +4,7 @@ function profile {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   PATH="$shome/bin:$PATH"
 
-  case "$(uname -s)" in
-    Linux)
-      export DOCKER_HOST="tcp://127.0.0.1:2375"
-      ;;
-    Darwin)
-      export DOCKER_HOST="tcp://172.28.128.3:2375"
-      ;;
-  esac
+  export DOCKER_HOST="tcp://127.0.0.1:2375"
 }
 
 profile
