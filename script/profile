@@ -3,6 +3,8 @@
 function profile {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   PATH="$shome/bin:$PATH"
+
+  export DOCKER_HOST="tcp://127.0.0.1:2375"
 }
 
 profile
