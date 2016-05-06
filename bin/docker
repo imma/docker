@@ -1,30 +1,15 @@
 #!/usr/bin/env bash
 
-export VAGRANT_DEFAULT_PROVIDER="docker"
-
 function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
-
   source "$shome/script/profile"
 
-  if [[ -x "$(which "parity-${1:-}" 2>&- || true)" ]]; then
-    local nm_command="$1"; shift
-
-    local nm_image="ubuntu:latest"
-    if [[ -n "${1:-}" ]]; then
-      nm_image="$1"
-      shift
-    fi
-
-    exec parity "$nm_command" "$@"
+  local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker)"
+  if [[ -x "$cmd_docker" ]]; then
+    exec "$cmd_docker" "$@"
   else
-    local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker)"
-    if [[ -x "$cmd_docker" ]]; then
-      exec "$cmd_docker" "$@"
-    else
-      echo "ERROR: docker not found: docker $*" 1>&2
-      false
-    fi
+    echo "ERROR: docker not found: docker $*" 1>&2
+    false
   fi
 }
 
