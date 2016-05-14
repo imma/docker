@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 
+function docker_package_install {
+  # Get the latest docker package
+  curl -sS -L https://get.docker.com/gpg | sudo apt-key add -
+
+  # Install Docker
+  curl -sS -L https://get.docker.com/ | bash
+
+  # use device mapper, bridge device
+  cat | sudo tee -a /etc/default/docker <<"__EOF"
+DOCKER_OPTS="--storage-driver=devicemapper -b=br0"
+__EOF
+
+  # Enable memory and swap accounting
+  if [[ -f "/etc/default/grub" ]]; then
+    sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' /etc/default/grub
+    sudo update-grub
+  fi
+}
+
+function docker_machine_install {
+  cache curl "docker-machine-0.7.0" "https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-$(uname -s)-$(uname -m)"
+  rsync -ia "${BASEBOX_CACHE}/curl/docker-machine-0.7.0" "$shome/bin/docker-machine"
+  chmod +x "$shome/bin/docker-machine"
+}
+
 function bootstrap {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   source "$shome/script/profile"
@@ -8,6 +33,10 @@ function bootstrap {
     Darwin)
       block compile pkg \
         'https://github.com/docker/toolbox/releases/download/v1.11.1/DockerToolbox-1.11.1.pkg'
+      ;;
+    Linux)
+      docker_package_install 
+      docker_machine_install 
       ;;
   esac
 }
