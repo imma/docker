@@ -6,17 +6,6 @@ function docker_package_install {
 
   # Install Docker
   curl -sS -L https://get.docker.com/ | bash
-
-  # use device mapper, bridge device
-  cat | sudo tee -a /etc/default/docker <<"__EOF"
-DOCKER_OPTS="--storage-driver=devicemapper -b=br0"
-__EOF
-
-  # Enable memory and swap accounting
-  if [[ -f "/etc/default/grub" ]]; then
-    sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' /etc/default/grub
-    sudo update-grub
-  fi
 }
 
 function docker_machine_install {
