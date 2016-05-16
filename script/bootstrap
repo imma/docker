@@ -10,7 +10,9 @@ function docker_package_install {
 
 function docker_machine_install {
   cache curl "docker-machine-0.7.0" "https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-$(uname -s)-$(uname -m)"
+  cache curl "docker-compose-1.7.1" "https://github.com/docker/machine/releases/download/1.7.1/docker-compose-$(uname -s)-$(uname -m)"
   rsync -ia "${BASEBOX_CACHE}/curl/docker-machine-0.7.0" "$shome/bin/docker-machine"
+  rsync -ia "${BASEBOX_CACHE}/curl/docker-compose-1.7.1" "$shome/bin/docker-compose"
   chmod +x "$shome/bin/docker-machine"
 }
 
