@@ -17,6 +17,9 @@ function bootstrap {
       block compile pkg \
         'https://github.com/docker/toolbox/releases/download/v1.11.1/DockerToolbox-1.11.1.pkg'
       ;;
+    Linux)
+      docker_package_install
+      ;;
   esac
 }
 
