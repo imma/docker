@@ -1,6 +1,8 @@
 {
   "require": [
     "context",
-    "parity"
+    "parity",
+    "docker-machine",
+    "docker-compose"
   ]
 }

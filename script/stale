@@ -6,11 +6,7 @@ function main {
 
   local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker 2>&- || true)"
   if [[ -x "$cmd_docker" ]]; then
-    if [[ -x "$(which docker-machine 2>/dev/null || true)" ]]; then
-      if [[ -x "$(which docker-compose 2>/dev/null || true)" ]]; then
-        return 1
-      fi
-    fi
+    return 1
   fi
 
   return 0

@@ -5,13 +5,9 @@ function version {
   source "$shome/script/profile"
 
   local ver_docker="$(docker --version 2>&- | awk 'NR == 1 {print $3}' | perl -pe 's{,$}{}' || true)"
-  local ver_machine="$(docker-machine --version 2>&- | awk 'NR == 1 {print $3}' | perl -pe 's{,$}{}' || true)"
-  local ver_compose="$(docker-compose --version 2>&- | awk 'NR == 1 {print $3}' | perl -pe 's{,$}{}' || true)"
   jq -n \
     --arg docker "$ver_docker" \
-    --arg machine "$ver_machine" \
-    --arg compose "$ver_compose" \
-    '{docker: $docker, "docker-machine": $machine, "docker-compose": $compose}'
+    '{docker: $docker}'
 }
 
 version "$@"

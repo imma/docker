@@ -8,15 +8,6 @@ function docker_package_install {
   curl -sS -L https://get.docker.com/ | bash
 }
 
-function docker_machine_install {
-  cache curl "docker-machine-0.7.0" "https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-$(uname -s)-$(uname -m)"
-  cache curl "docker-compose-1.7.1" "https://github.com/docker/machine/releases/download/1.7.1/docker-compose-$(uname -s)-$(uname -m)"
-  rsync -ia "${BASEBOX_CACHE}/curl/docker-machine-0.7.0" "$shome/bin/docker-machine"
-  rsync -ia "${BASEBOX_CACHE}/curl/docker-compose-1.7.1" "$shome/bin/docker-compose"
-  chmod +x "$shome/bin/docker-machine"
-  chmod +x "$shome/bin/docker-compose"
-}
-
 function bootstrap {
   local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   source "$shome/script/profile"
@@ -25,10 +16,6 @@ function bootstrap {
     Darwin)
       block compile pkg \
         'https://github.com/docker/toolbox/releases/download/v1.11.1/DockerToolbox-1.11.1.pkg'
-      ;;
-    Linux)
-      docker_package_install 
-      docker_machine_install 
       ;;
   esac
 }
