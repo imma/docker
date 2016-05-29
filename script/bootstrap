@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 function docker_package_install {
-  # Get the latest docker package
-  curl -sS -L https://get.docker.com/gpg | sudo apt-key add -
+  sudo apt-key add "$shome/etc/docker.gpg"
 
   # Install Docker
   curl -sS -L https://get.docker.com/ | bash
