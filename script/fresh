@@ -4,12 +4,24 @@ function main {
   local shome="${_docker_home:-"$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"}"
   source "$shome/script/profile"
 
+  case "$(uname -s)" in
+    Linux)
+      source /etc/lsb-release
+      case "$DISTRIB_CODENAME" in
+        xenial)
+          ;;
+        *)
+          return 0
+      esac
+      ;;
+  esac
+
   local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker 2>&- || true)"
   if [[ -x "$cmd_docker" ]]; then
-    return 1
+    return 0
   fi
 
-  return 0
+  return 1
 }
 
-source sub "$0" "$@"
+main "$@"

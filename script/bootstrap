@@ -7,10 +7,6 @@ function docker_package_install {
     xenial)
       sudo aptitude install -y docker.io
       ;;
-    *)
-      sudo apt-key add "$shome/etc/docker.gpg"
-      curl -sS -L https://get.docker.com/ | bash
-      ;;
   esac
 }
 
