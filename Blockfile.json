@@ -2,7 +2,6 @@
   "require": [
     "context",
     "parity",
-    "docker-machine",
     "docker-compose"
   ]
 }
