@@ -17,7 +17,7 @@ function bootstrap {
   case "$(uname -s)" in
     Darwin)
       block compile pkg \
-        'https://github.com/docker/toolbox/releases/download/v1.11.2/DockerToolbox-1.11.2.pkg'
+        'https://github.com/docker/toolbox/releases/download/v1.12.3/DockerToolbox-1.12.3.pkg'
       ;;
     Linux)
       docker_package_install
