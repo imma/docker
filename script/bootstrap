@@ -3,11 +3,7 @@
 function docker_package_install {
   source /etc/lsb-release
 
-  case "$DISTRIB_CODENAME" in
-    xenial)
-      sudo aptitude install -y docker.io
-      ;;
-  esac
+  sudo -E aptitude install -y docker.io
 }
 
 function bootstrap {
