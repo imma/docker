@@ -4,24 +4,16 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  case "$(uname -s)" in
-    Linux)
-      source /etc/lsb-release
-      case "$DISTRIB_CODENAME" in
-        xenial)
-          ;;
-        *)
-          return 0
-      esac
-      ;;
-  esac
-
   local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker 2>/dev/null || true)"
-  if [[ -x "$cmd_docker" ]]; then
-    return 0
+  if [[ ! -x "$cmd_docker" ]]; then
+    return 1
   fi
 
-  return 1
+  if [[ "$($shome/script/version | jq -r '.docker')" != "$DOCKER_VERSION" ]]; then
+    return 1
+  fi
+
+  return 0
 }
 
-main "$@"
+source sub "$BASH_SOURCE" "$@"
