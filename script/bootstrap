@@ -13,6 +13,7 @@ function bootstrap {
   case "$(uname -s)" in
     Darwin)
       brew cask install docker
+      brew cask install docker-toolbox
       ;;
     Linux)
       docker_package_install
