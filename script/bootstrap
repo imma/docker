@@ -12,7 +12,7 @@ function bootstrap {
 
   case "$(uname -s)" in
     Darwin)
-      true
+      brew cask install docker
       ;;
     Linux)
       docker_package_install
