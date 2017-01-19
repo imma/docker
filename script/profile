@@ -6,7 +6,7 @@ function _docker_profile {
 
   case "$(uname -s)" in
     Darwin)
-      DOCKER_VERSION='1.12.6'
+      DOCKER_VERSION='1.13.0'
       ;;
     Linux)
       DOCKER_VERSION='1.12.1'
