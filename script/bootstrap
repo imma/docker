@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-function docker_package_install {
-  source /etc/lsb-release
-
-  sudo -E aptitude install -y docker.io
-}
-
 function bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
@@ -13,10 +7,9 @@ function bootstrap {
   case "$(uname -s)" in
     Darwin)
       brew cask install docker
-      brew cask install docker-toolbox
       ;;
     Linux)
-      docker_package_install
+      sudo -E aptitude install -y docker.io
       sudo usermod -a -G docker ubuntu || true
       sudo usermod -a -G staff ubuntu || true
       ;;
