@@ -9,9 +9,11 @@ function bootstrap {
       brew cask install docker
       ;;
     Linux)
+      sudo apt-mark unhold docker.io 2>/dev/null 1>&2 || true
       sudo -E aptitude install -y docker.io
       sudo usermod -a -G docker ubuntu || true
       sudo usermod -a -G staff ubuntu || true
+      sudo apt-mark hold docker.io
       ;;
   esac
 }
