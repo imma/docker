@@ -9,6 +9,12 @@ function main {
     return 1
   fi
 
+  case "$(uname -s)" in
+    Darwin)
+      return 0
+      ;;
+  esac
+
   if [[ "$($shome/script/version | jq -r '.docker')" != "$DOCKER_VERSION" ]]; then
     return 1
   fi
