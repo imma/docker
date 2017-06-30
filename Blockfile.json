@@ -1,9 +1,6 @@
 {
   "require": [
-    "homebrew",
-    "jq",
-    "context",
-    "parity",
-    "docker-compose"
+    "docker-compose",
+    "docker-machine"
   ]
 }
