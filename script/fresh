@@ -4,8 +4,7 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  local cmd_docker="$(which /usr/local/bin/docker /usr/bin/docker 2>/dev/null || true)"
-  if [[ ! -x "$cmd_docker" ]]; then
+  if ! type -P docker >/dev/null; then
     return 1
   fi
 

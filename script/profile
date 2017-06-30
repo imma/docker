@@ -4,14 +4,8 @@ function _docker_profile {
   local shome="${_docker_home:-"$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
   PATH="$shome/bin:$PATH"
 
-  case "$(uname -s)" in
-    Darwin)
-      DOCKER_VERSION='17.03.0-ce'
-      ;;
-    Linux)
-      DOCKER_VERSION='1.12.6'
-      ;;
-  esac
+  DOCKER_VERSION='17.06.0-ce'
+  DOCKER_UBUNTU_VERSION='17.06.0~ce-0~ubuntu-xenial'
 }
 
 _docker_profile
