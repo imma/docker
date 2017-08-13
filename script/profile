@@ -5,7 +5,7 @@ function _docker_profile {
   PATH="$shome/bin:$PATH"
 
   DOCKER_VERSION='17.06.0-ce'
-  DOCKER_UBUNTU_VERSION='17.06.0~ce-0~ubuntu'
+  DOCKER_UBUNTU_VERSION='17.06.0~ce'
 }
 
 _docker_profile
