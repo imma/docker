@@ -18,10 +18,6 @@ function main {
       ;;
   esac
 
-  if [[ "$($shome/script/version | jq -r '.docker')" != "$DOCKER_VERSION" ]]; then
-    return 1
-  fi
-
   return 0
 }
 
