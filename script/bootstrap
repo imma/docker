@@ -11,6 +11,7 @@ function bootstrap {
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | ${NOSUDO} sudo apt-key add -
       ${NOSUDO} sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
       ${NOSUDO} sudo apt-get update
+      ${NOSUDO} sudo apt-mark unhold docker-ce 2>/dev/null 1>&2 || true
       ${NOSUDO} sudo $loader apt-get install -y docker-ce="${DOCKER_UBUNTU_VERSION}-*"
       ${NOSUDO} sudo aptitude hold docker-ce
       ${NOSUDO} sudo usermod -a -G docker ubuntu || true
