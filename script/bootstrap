@@ -5,8 +5,8 @@ function bootstrap {
   source "$shome/script/profile"
 
   set -x
-  case "$(uname -s)" in
-    Linux)
+  case "${DISTRIB_ID}" in
+    Ubuntu)
       local loader='env DEBIAN_FRONTEND=noninteractive'
       ${NOSUDO} sudo $loader apt-get install -y apt-transport-https ca-certificates curl software-properties-common
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | ${NOSUDO} sudo apt-key add -

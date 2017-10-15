@@ -12,10 +12,8 @@ function main {
     return 1
   fi
 
-  case "$(uname -s)" in
-    Darwin)
-      return 0
-      ;;
+  case "${DISTRIB_ID}" in
+    Darwin) return 0 ;;
   esac
 
   return 0
