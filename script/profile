@@ -3,9 +3,6 @@
 function _docker_profile {
   local shome="${_docker_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
   PATH="$shome/bin:$PATH"
-
-  DOCKER_VERSION='17.06.2-ce'
-  DOCKER_UBUNTU_VERSION='17.06.2~ce'
 }
 
 _docker_profile
