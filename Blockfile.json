@@ -2,5 +2,6 @@
   "require": [
     "docker-compose",
     "docker-machine"
-  ]
+  ],
+  "versions": {}
 }
