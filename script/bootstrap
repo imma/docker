@@ -6,6 +6,10 @@ function bootstrap {
 
   set -x
   case "${DISTRIB_ID}" in
+    Darwin)
+      brew update
+      brew cask install caskroom/versions/docker-edge
+      ;;
     Ubuntu)
       local loader='env DEBIAN_FRONTEND=noninteractive'
       ${NOSUDO} sudo $loader apt-get install -y apt-transport-https ca-certificates curl software-properties-common
