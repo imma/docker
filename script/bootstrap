@@ -10,6 +10,11 @@ function bootstrap {
       brew update
       brew cask install caskroom/versions/docker-edge
       ;;
+    Amazon)
+      ${NOSUDO} sudo yum install -y docker
+      ${NOSUDO} sudo usermod -a -G docker ec2-user || true
+      ${NOSUDO} sudo usermod -a -G docker ubuntu || true
+      ;;
     Ubuntu)
       local loader='env DEBIAN_FRONTEND=noninteractive'
       ${NOSUDO} sudo $loader apt-get install -y apt-transport-https ca-certificates curl software-properties-common
