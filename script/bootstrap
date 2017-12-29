@@ -15,6 +15,11 @@ function bootstrap {
       ${NOSUDO} sudo usermod -a -G docker ec2-user || true
       ${NOSUDO} sudo usermod -a -G docker ubuntu || true
       ;;
+    CentOS)
+      ${NOSUDO} sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+      ${NOSUDO} sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      ${NOSUDO} sudo yum install -y docker-ce-${DOCKER_VERSION%?ce}.ce
+      ;;
     Ubuntu)
       local loader='env DEBIAN_FRONTEND=noninteractive'
       ${NOSUDO} sudo $loader apt-get install -y apt-transport-https ca-certificates curl software-properties-common
@@ -22,7 +27,7 @@ function bootstrap {
       ${NOSUDO} sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
       ${NOSUDO} sudo apt-get update
       ${NOSUDO} sudo apt-mark unhold docker-ce 2>/dev/null 1>&2 || true
-      ${NOSUDO} sudo $loader apt-get install -y docker-ce="${DOCKER_UBUNTU_VERSION}-*"
+      ${NOSUDO} sudo $loader apt-get install -y docker-ce="${DOCKER_VERSION}-*"
       ${NOSUDO} sudo aptitude hold docker-ce
       ${NOSUDO} sudo usermod -a -G docker ubuntu || true
       ${NOSUDO} sudo usermod -a -G staff ubuntu || true
