@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function main {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+  source "$shome/script/profile"
+
+  local pth_source="${1}"; shift
+
+  exec rsync --progress -ia --relative "${pth_source}" -e "docker run -i $* rsync --server -logDtpr --log-format=%i . /" "${pth_source}" :
+}
+
+source sub-chain "$BASH_SOURCE" "$@"
