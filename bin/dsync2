@@ -8,7 +8,7 @@ function main {
   local nm_volume="$1"; shift
 
   docker volume create "${nm_volume}" || true
-  exec rsync --progress -ia --delete --exclude .git -e "docker run -i -v ${nm_volume}:/sync $* rsync --server -logDtpr --log-format=%i . /sync/." "${pth_source}/." :
+  exec rsync --progress -ia --delete --exclude .git --exclude results -e "docker run -i -v ${nm_volume}:/sync $* rsync --server -logDtpr --log-format=%i . /sync/." "${pth_source}/." :
 }
 
 source sub-chain "$BASH_SOURCE" "$@"
