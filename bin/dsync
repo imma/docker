@@ -4,8 +4,8 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  local nm_volume="$1"; shift
   local pth_source="${1}"; shift
+  local nm_volume="$1"; shift
 
   docker volume create "${nm_volume}" || true
   exec rsync --progress -ia --relative "${pth_source}" -e "docker run -i -v "${nm_volume}:/$(echo "${pth_source}" | cut -d/ -f2)" $* rsync --server -logDtpr --log-format=%i . /" "${pth_source}" :
