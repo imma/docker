@@ -7,8 +7,8 @@ function main {
   local pth_source="${1}"; shift
   local nm_volume="$1"; shift
   local nm_image="$1"; shift
-
-  local pth_remote="$pth_source"
+  local pth_remote="$(echo "$pth_source" | cut -d: -f2)"
+  pth_source="$(echo "$pth_source" | cut -d: -f1)"
 
   docker volume create "${nm_volume}" || true
   exec rsync --progress -ia -e "docker run -i -v "${nm_volume}:${pth_remote}" "${nm_image}" rsync --server -logDtpr --log-format=%i . ${pth_remote}/." "$@" "${pth_source}/." :
