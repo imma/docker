@@ -4,11 +4,7 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  if [[ -n "${NOSUDO:-}" ]]; then
-    return 0
-  fi
-
-  if ! type -P docker >/dev/null; then
+  if [[ "$($shome/script/version | jq -r '.docker')" != "$DOCKER_VERSION" ]]; then
     return 1
   fi
 
