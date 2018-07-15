@@ -33,11 +33,11 @@ function bootstrap {
   case "$(uname -s)" in
     Linux)
       cd "$shome"
-      curl -s -L https://github.com/docker/docker-credential-helpers/releases/download/v${DOCKER_CREDENTIAL_PASS_VERSION}/docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
       mkdir -p "$shome/bin"
       cd bin
-      tar xvfz ../docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
-      rm -f ../docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
+      curl -s -L https://github.com/docker/docker-credential-helpers/releases/download/v${DOCKER_CREDENTIAL_PASS_VERSION}/docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz > "docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz"
+      tar xvf docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
+      rm -f docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
       ;;
   esac
 }
