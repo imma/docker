@@ -10,6 +10,11 @@ function main {
         return 0
       fi
       ;;
+    Linux)
+      if ! type -P docker-credential-pass >/dev/null; then
+        return 1
+      fi
+      ;;
   esac
 
   if [[ "$($shome/script/version | jq -r '.docker')" != "$DOCKER_VERSION" ]]; then

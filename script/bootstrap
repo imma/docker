@@ -12,8 +12,6 @@ function bootstrap {
       ;;
     Amazon)
       ${NOSUDO} sudo yum install -y docker
-      ${NOSUDO} sudo usermod -a -G docker ec2-user || true
-      ${NOSUDO} sudo usermod -a -G docker ubuntu || true
       ;;
     CentOS)
       ${NOSUDO} sudo yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -29,8 +27,17 @@ function bootstrap {
       ${NOSUDO} sudo apt-mark unhold docker-ce 2>/dev/null 1>&2 || true
       ${NOSUDO} sudo $loader apt-get install -y docker-ce="${DOCKER_VERSION}*"
       ${NOSUDO} sudo aptitude hold docker-ce
-      ${NOSUDO} sudo usermod -a -G docker ubuntu || true
-      ${NOSUDO} sudo usermod -a -G staff ubuntu || true
+      ;;
+  esac
+
+  case "$(uname -s)" in
+    Linux)
+      cd "$shome"
+      curl -s -L https://github.com/docker/docker-credential-helpers/releases/download/v${DOCKER_CREDENTIAL_PASS_VERSION}/docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
+      mkdir -p "$shome/bin"
+      cd bin
+      tar xvfz ../docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
+      rm -f ../docker-credential-pass-v${DOCKER_CREDENTIAL_PASS_VERSION}-amd64.tar.gz
       ;;
   esac
 }
